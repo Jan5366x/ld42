@@ -10,6 +10,14 @@ public class Atomic <T> {
     private T content = null;
     private final Guard guard = new Guard();
 
+    public Atomic() {
+
+    }
+
+    public Atomic(final T obj) {
+        set(obj);
+    }
+
     public T get() {
         return guard.read(() -> content);
     }

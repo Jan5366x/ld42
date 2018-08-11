@@ -1,7 +1,12 @@
 package de.jam.game;
 
+import de.jam.qad.io.ImageFxResource;
+import de.jam.qad.io.ResourceManager;
 import de.jam.qad.text.Translate;
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.util.Properties;
@@ -19,7 +24,6 @@ public class MainGame extends Application {
         System.out.println("init javafx");
         launch(args);
 
-
     }
 
     @Override
@@ -34,6 +38,16 @@ public class MainGame extends Application {
         // setup window size
         stage.setMinWidth(500);
         stage.setMinHeight(350);
+
+
+        // TODO test stuff >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+        var root = new StackPane();
+        var testImg = new ImageView(ResourceManager.get("/texture/test.png", ImageFxResource.class).get());
+        root.getChildren().add(testImg);
+
+        stage.setScene(new Scene(root,500,350));
+        // TODO <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
         stage.show();
     }

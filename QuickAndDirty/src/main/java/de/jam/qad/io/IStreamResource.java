@@ -9,5 +9,5 @@ import java.io.InputStream;
  * Created on 11.08.2018.
  */
 public interface IStreamResource extends IResource {
-    void loadByStream(final InputStream stream);
+    void loadByStream(final InputStream stream) throws Exception;
 }
