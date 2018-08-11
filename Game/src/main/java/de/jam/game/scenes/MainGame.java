@@ -1,6 +1,9 @@
 package de.jam.game.scenes;
 
 import de.jam.qad.game.scene.IScene;
+import de.jam.qad.game.scene.SceneManager;
+import de.jam.qad.structure.Components;
+import javafx.event.ActionEvent;
 import javafx.scene.layout.Pane;
 
 /**
@@ -28,6 +31,11 @@ public class MainGame implements IScene {
 
     @Override
     public String getBaseFxml() {
-        return null;
+        return "/ui/game_overlay.fxml";
+    }
+
+    public void onTest(ActionEvent actionEvent) {
+        System.out.println("TTTTTTTTTTTESSSSSSSSSSSSSSSSSSSSSTTTTT");
+        Components.get(SceneManager.class).switchTo("menu");
     }
 }

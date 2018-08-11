@@ -4,12 +4,9 @@ import de.jam.qad.structure.IComponent;
 import de.jam.qad.text.Translate;
 import gnu.trove.map.hash.THashMap;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
-import java.util.Collection;
-import java.util.Objects;
 
 /**
  * Scene Manager
@@ -49,7 +46,9 @@ public class SceneManager implements IComponent {
         try {
             if (currentScene.getBaseFxml() != null) {
                 final URL resourceUrl = SceneManager.class.getResource(currentScene.getBaseFxml());
-                parentNode.getChildren().add(FXMLLoader.load(resourceUrl, Translate.getResourceBundle()));
+                final FXMLLoader loader = new FXMLLoader(resourceUrl, Translate.getResourceBundle());
+                parentNode.getChildren().add(loader.load());
+                loader.setController(currentScene);
             }
         } catch (Exception e) {
             System.err.println("Error while switching scene!");
