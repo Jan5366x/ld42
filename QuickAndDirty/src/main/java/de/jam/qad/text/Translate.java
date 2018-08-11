@@ -2,7 +2,10 @@ package de.jam.qad.text;
 
 import gnu.trove.map.hash.THashMap;
 
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 /**
  * Translate
@@ -12,6 +15,7 @@ import java.util.Properties;
  */
 public class Translate {
     private static THashMap<String, String> translateMap = new THashMap<>();
+    private static TranslateBundle translateBundle = new TranslateBundle();
 
     public static String get(final String key, final Object... args) {
 
@@ -51,4 +55,11 @@ public class Translate {
         return key.trim();
     }
 
+    public static ResourceBundle getResourceBundle() {
+        return translateBundle;
+    }
+
+    public static Enumeration<String> getKeys() {
+        return Collections.enumeration(translateMap.keySet());
+    }
 }

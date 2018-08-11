@@ -94,13 +94,13 @@ public class ResourceManager {
     }
 
     public static void shutdown() {
-        resources.forEach((s, r) -> {
+        guard.write(() -> resources.forEach((s, r) -> {
             try {
                 r.dispose();
                 System.out.println("Resource \"" + s + "\" released!");
             } catch (Exception e) {
                 System.err.println("Resource \"" + s + "\" can't be released!");
             }
-        });
+        }));
     }
 }

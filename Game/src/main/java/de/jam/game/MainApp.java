@@ -1,12 +1,19 @@
 package de.jam.game;
 
+import de.jam.game.scenes.MainGame;
+import de.jam.game.scenes.MainMenu;
+import de.jam.qad.game.scene.SceneManager;
 import de.jam.qad.io.RawAudioClip;
 import de.jam.qad.io.ImageFxResource;
 import de.jam.qad.io.ResourceManager;
+import de.jam.qad.structure.Components;
 import de.jam.qad.text.Translate;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -18,7 +25,7 @@ import java.util.Properties;
  * @author Jan5366x
  * Created on 11.08.2018.
  */
-public class MainGame extends Application {
+public class MainApp extends Application {
 
     public static void main(String[] args) {
 
@@ -40,30 +47,23 @@ public class MainGame extends Application {
         stage.setMinWidth(500);
         stage.setMinHeight(350);
 
-
-        // TODO test stuff >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-        var root = new StackPane();
-        var testImg = new ImageView(ResourceManager.get("/texture/test.png", ImageFxResource.class).get());
-        root.getChildren().add(testImg);
-
-
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                final var testClip = ResourceManager.get("/audio/test_audio.wav", RawAudioClip.class).getClip();
-                testClip.loop(Integer.MAX_VALUE);
-            }
-        }.start();
-
-
+        var root = new AnchorPane();
         stage.setScene(new Scene(root,500,350));
-        // TODO <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+        setupComponents(root);
+
+        Components.get(SceneManager.class).addScene("menu",new MainMenu());
+        Components.get(SceneManager.class).addScene("game",new MainGame());
+        Components.get(SceneManager.class).switchTo("menu");
 
         stage.show();
     }
 
+    private void setupComponents(Pane root) {
+        Components.add(new SceneManager(root));
+
+        Components.start();
+    }
 
     @Override
     public void stop() throws Exception {
