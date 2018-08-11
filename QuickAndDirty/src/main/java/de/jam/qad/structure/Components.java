@@ -30,6 +30,7 @@ public class Components {
                 guard.readLock();
                 try {
                     components.forEach((aClass, component) -> component.update());
+                    Time.notifyFrame();
                 } finally {
                     guard.readUnlock();
                 }

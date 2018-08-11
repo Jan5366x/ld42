@@ -4,16 +4,15 @@ import de.jam.qad.game.scene.IScene;
 import javafx.scene.layout.Pane;
 
 /**
- * Main Game
+ * Intro
  *
  * @author Jan5366x
  * Created on 11.08.2018.
  */
-public class MainGame implements IScene {
-
+public class Intro implements IScene {
     @Override
     public void onSetup(Pane sceneParent) {
-        System.out.println("game miep!");
+
     }
 
     @Override
@@ -28,8 +27,6 @@ public class MainGame implements IScene {
 
     @Override
     public String getBaseFxml() {
-        return "/ui/scene/base/main_game.fxml";
+        return null;
     }
-
-
 }

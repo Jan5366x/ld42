@@ -29,14 +29,15 @@ public class MainMenu implements IScene {
     public void onSetup(Pane sceneParent) {
         System.out.println("menu miep!");
         testImg = new ImageView(ResourceManager.get("/texture/test.png", ImageFxResource.class).get());
+        testImg.setSmooth(false);
         sceneParent.getChildren().add(testImg);
 
     }
 
     @Override
     public void onUpdate() {
-        testImg.setX(testImg.getX() + 1D);
-        testImg.setY(testImg.getY() + 1D);
+        testImg.setX((int) (testImg.getX() + 1));
+        testImg.setY((int) (testImg.getY() + 1));
 
     }
 
@@ -47,7 +48,7 @@ public class MainMenu implements IScene {
 
     @Override
     public String getBaseFxml() {
-        return "/ui/main_menu.fxml";
+        return "/ui/scene/base/main_menu.fxml";
     }
 
     public void onExit(ActionEvent actionEvent) {
