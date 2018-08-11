@@ -2,6 +2,7 @@ package de.jam.qad.io;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import java.io.BufferedInputStream;
 import java.io.InputStream;
 
 /**
@@ -15,7 +16,7 @@ public class AudioClip implements IStreamResource {
     @Override
     public void loadByStream(InputStream stream) throws Exception {
        clip = AudioSystem.getClip();
-       final var audioStream = AudioSystem.getAudioInputStream(stream);
+       final var audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(stream));
        clip.open(audioStream);
     }
 

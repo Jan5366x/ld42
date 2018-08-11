@@ -3,6 +3,9 @@ package de.jam.qad.io;
 import de.jam.qad.threading.Guard;
 import gnu.trove.map.hash.THashMap;
 
+import java.io.File;
+import java.io.FileInputStream;
+
 /**
  * Resource Manager
  *
@@ -13,9 +16,13 @@ public class ResourceManager {
     private final static THashMap<String, IResource> resources = new THashMap<>();
     private final static Guard guard = new Guard();
 
-    @SuppressWarnings("unchecked")
     public static <T extends IResource> T get(final String resourceName, final Class<T> resourceType) {
+        return get(resourceName, resourceType,false);
 
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends IResource> T get(final String resourceName, final Class<T> resourceType, final boolean internal) {
         T result = guard.read(() -> (T) resources.get(resourceName));
 
         if (result != null)
@@ -30,7 +37,7 @@ public class ResourceManager {
             if (result != null)
                 return result;
 
-            result = autoLoad(resourceName, resourceType);
+            result = load(resourceName, resourceType,internal);
             if (result != null)
                 resources.put(resourceName, result);
 
@@ -41,7 +48,9 @@ public class ResourceManager {
     }
 
 
-    private static <T extends IResource> T autoLoad(final String resourceName, final Class<T> resourceType) {
+
+
+    private static <T extends IResource> T load(final String resourceName, final Class<T> resourceType, boolean internal) {
         try {
             System.out.println("load: " + resourceName);
 
@@ -50,10 +59,18 @@ public class ResourceManager {
 
             // load resource
             if (IStreamResource.class.isAssignableFrom(resourceType)) {
-                final IStreamResource streamResource = (IStreamResource) resource;
-                try (var is = ResourceManager.class.getResourceAsStream(resourceName)) {
-                    streamResource.loadByStream(is);
+                final var streamResource = (IStreamResource) resource;
+                if (internal) {
+                    try (var is = ResourceManager.class.getResourceAsStream(resourceName)) {
+                        streamResource.loadByStream(is);
+                    }
+                } else {
+                    final var resourceFile = new File(resourceName);
+                    try (var is = new FileInputStream(resourceFile)) {
+                        streamResource.loadByStream(is);
+                    }
                 }
+
             } else if (IPathResource.class.isAssignableFrom(resourceType)) {
                 final IPathResource pathResource = ((IPathResource) resource);
                 pathResource.loadByPath(resourceName);

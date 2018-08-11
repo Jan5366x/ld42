@@ -1,5 +1,6 @@
 package de.jam.game;
 
+import de.jam.qad.io.AudioClip;
 import de.jam.qad.io.ImageFxResource;
 import de.jam.qad.io.ResourceManager;
 import de.jam.qad.text.Translate;
@@ -43,8 +44,21 @@ public class MainGame extends Application {
         // TODO test stuff >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
         var root = new StackPane();
-        var testImg = new ImageView(ResourceManager.get("/texture/test.png", ImageFxResource.class).get());
+        var testImg = new ImageView(ResourceManager.get("./resources/texture/test.png", ImageFxResource.class).get());
         root.getChildren().add(testImg);
+
+
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                final var testClip = ResourceManager.get("./resources/audio/test_audio.wav", AudioClip.class);
+
+                // check for existences since the test loop will not pushed to git
+                if (testClip != null)
+                   testClip.loop(100);
+            }
+        }.start();
 
         stage.setScene(new Scene(root,500,350));
         // TODO <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
