@@ -8,7 +8,9 @@ allprojects {
     version '1.0-SNAPSHOT'
 
     project.ext {
-        troveVersion        = '3.0.3'
+        troveVersion            = '3.0.3'
+        jUnitVersion            = '5.2.0'
+        jUnitPlatformVersion    = '1.2.0'
     }
 
     sourceCompatibility = 10

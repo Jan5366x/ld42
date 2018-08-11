@@ -1,0 +1,29 @@
+image: novacyb/java10_javafx_gradle:latest
+
+# This file is only required for the CI server, you can just ignore it since all build operations can
+# be also executed directly via gradle tasks
+
+stages:
+  - engine
+  - game
+#  - build
+
+test-engine:
+  stage: engine
+  script:
+  - gradle :QuckAndDirty:clean :QuckAndDirty:test
+  when: always
+
+test-game:
+  stage: game
+  script:
+  - gradle :Game:clean :Game:test
+  when: always
+
+# TODO add build & package
+#build-all:
+#  stage: build
+#  script:
+#  -
+#  when: on_success
+
