@@ -56,6 +56,10 @@ public class MainMenu implements IScene {
     }
 
     public void onStartGame(ActionEvent actionEvent) {
-        Components.get(SceneManager.class).switchTo("game");
+        Components.get(SceneManager.class).switchTo(MainScenes.game.toString());
+    }
+
+    public void onShowCredits(ActionEvent actionEvent) {
+        Components.get(SceneManager.class).switchTo(MainScenes.credits.toString());
     }
 }

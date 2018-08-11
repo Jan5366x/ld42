@@ -1,6 +1,9 @@
 package de.jam.game.scenes;
 
 import de.jam.qad.game.scene.IScene;
+import de.jam.qad.game.scene.SceneManager;
+import de.jam.qad.structure.Components;
+import javafx.event.ActionEvent;
 import javafx.scene.layout.Pane;
 
 /**
@@ -27,6 +30,10 @@ public class Credits implements IScene {
 
     @Override
     public String getBaseFxml() {
-        return null;
+        return "/ui/scene/base/credits.fxml";
+    }
+
+    public void onBackToMenu(ActionEvent actionEvent) {
+        Components.get(SceneManager.class).switchTo(MainScenes.menu.toString());
     }
 }

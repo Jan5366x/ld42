@@ -1,6 +1,8 @@
 package de.jam.game.scenes;
 
 import de.jam.qad.game.scene.IScene;
+import de.jam.qad.game.scene.SceneManager;
+import de.jam.qad.structure.Components;
 import javafx.scene.layout.Pane;
 
 /**
@@ -15,8 +17,14 @@ public class Intro implements IScene {
 
     }
 
+    int pT = 0;
     @Override
     public void onUpdate() {
+
+
+        // FIXME placeholder
+        if (pT++ >= 70)
+            Components.get(SceneManager.class).switchTo(MainScenes.menu.toString());
 
     }
 
@@ -27,6 +35,6 @@ public class Intro implements IScene {
 
     @Override
     public String getBaseFxml() {
-        return null;
+        return "/ui/scene/base/intro.fxml";
     }
 }

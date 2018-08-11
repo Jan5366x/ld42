@@ -4,13 +4,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@main_menu.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@main_menu.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.jam.game.scenes.MainMenu">
    <children>
       <VBox alignment="CENTER" layoutX="403.0" layoutY="240.0" prefHeight="137.0" prefWidth="173.0" spacing="10.0">
          <children>
-            <Button fx:id="startGameButton" mnemonicParsing="false" prefHeight="42.0" prefWidth="181.0" styleClass="menuButton" text="%menu.start" textAlignment="CENTER" />
-            <Button fx:id="showCreditsButton" mnemonicParsing="false" prefHeight="42.0" prefWidth="208.0" styleClass="menuButton" text="%menu.credits" textAlignment="CENTER" />
-            <Button fx:id="exitButton" mnemonicParsing="false" prefHeight="42.0" prefWidth="269.0" styleClass="menuButton" text="%menu.exit" textAlignment="CENTER" />
+            <Button fx:id="startGameButton" mnemonicParsing="false" prefHeight="42.0" prefWidth="181.0" text="%menu.start" textAlignment="CENTER" onAction="#onStartGame"/>
+            <Button fx:id="showCreditsButton" mnemonicParsing="false" prefHeight="42.0" prefWidth="208.0" text="%menu.credits" textAlignment="CENTER" onAction="#onShowCredits"/>
+            <Button fx:id="exitButton" mnemonicParsing="false" prefHeight="42.0" prefWidth="269.0" text="%menu.exit" textAlignment="CENTER" onAction="#onExit"/>
          </children>
       </VBox>
    </children>
