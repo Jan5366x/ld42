@@ -1,0 +1,4 @@
+rootProject.name = 'ld42'
+
+include 'Game'
+include 'QuickAndDirty'

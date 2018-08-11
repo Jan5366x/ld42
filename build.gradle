@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'maven'
+}
+
+allprojects {
+    group 'de.jam'
+    version '1.0-SNAPSHOT'
+
+    project.ext {
+        troveVersion        = '3.0.3'
+    }
+
+    sourceCompatibility = 10
+    targetCompatibility = 10
+}
+
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    test {
+
+        useJUnitPlatform()
+
+        testLogging.showStandardStreams = true
+
+        minHeapSize = '128m'
+        maxHeapSize = '512m'
+
+        failFast = false
+
+        onOutput { descriptor, event ->
+            logger.lifecycle("Test: " + descriptor + " Output: " + event.message)
+
+        }
+
+        beforeTest { descriptor ->
+            logger.lifecycle("Running test: $descriptor.className")
+        }
+    }
+}
