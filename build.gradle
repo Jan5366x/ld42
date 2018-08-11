@@ -13,6 +13,10 @@ allprojects {
         jUnitPlatformVersion    = '1.2.0'
     }
 
+    repositories {
+        mavenCentral()
+    }
+
     sourceCompatibility = 10
     targetCompatibility = 10
 }
