@@ -7,4 +7,5 @@ package de.jam.qad.io;
  * Created on 11.08.2018.
  */
 public interface IResource {
+    void dispose();
 }
