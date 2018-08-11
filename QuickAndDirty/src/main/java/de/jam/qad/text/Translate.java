@@ -13,19 +13,19 @@ import java.util.Properties;
 public class Translate {
     private static THashMap<String, String> translateMap = new THashMap<>();
 
-    public static String get(final String translateKey, final Object... args) {
+    public static String get(final String key, final Object... args) {
 
-        final var translate = translateMap.get(cleanupKey(translateKey));
+        final var translate = translateMap.get(cleanupKey(key));
 
         if (translate == null || translate.isEmpty())
-            return translateKey;
+            return key;
 
         return format(translate, args);
 
     }
 
-    public static void add(final String translateKey, final String text) {
-        translateMap.put(translateKey, text);
+    public static void add(final String key, final String text) {
+        translateMap.put(key, text);
     }
 
     public static void add(final Properties properties) {
@@ -47,8 +47,8 @@ public class Translate {
         return result;
     }
 
-    private static String cleanupKey(final String translateKey) {
-        return translateKey.trim();
+    private static String cleanupKey(final String key) {
+        return key.trim();
     }
 
 }
