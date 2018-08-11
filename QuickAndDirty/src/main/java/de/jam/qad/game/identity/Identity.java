@@ -1,8 +1,13 @@
 package de.jam.qad.game.identity;
 
+import de.jam.qad.game.identity.unit.FxRendererUnit;
+import de.jam.qad.game.identity.unit.IIdentityUnit;
+import de.jam.qad.game.identity.unit.PhysicsUnit;
 import de.jam.qad.game.world.WorldSpace;
 import de.jam.qad.math.Transform2D;
 import gnu.trove.map.hash.THashMap;
+
+import java.util.ArrayList;
 
 /**
  * Identity
@@ -14,6 +19,9 @@ public class Identity {
     public final Transform2D transform = new Transform2D();
     private final THashMap<Class<? extends IIdentityUnit>, IIdentityUnit> identityUnits = new THashMap<>();
 
+    private final ArrayList<Identity> children = new ArrayList<>();
+    private Identity parent = null;
+
     public void init(final WorldSpace worldSpace) {
         identityUnits.forEach((c, unit) -> unit.init(worldSpace,this));
     }
@@ -23,23 +31,31 @@ public class Identity {
     }
 
     public void update(final WorldSpace worldSpace) {
+        // physics
+        updateUnit(worldSpace,PhysicsUnit.class);
 
-        // process physics
-        final var physics = identityUnits.get(PhysicsUnit.class);
-        if (physics != null && physics.isEnabled())
-            physics.update(worldSpace,this);
+        // all other units
+        updateNonComplexUnits(worldSpace);
 
-        // run all other units
+        // render
+        updateUnit(worldSpace,FxRendererUnit.class);
+
+        // update children identities
+        children.forEach(identity -> identity.update(worldSpace));
+    }
+
+    private void updateNonComplexUnits(WorldSpace worldSpace) {
         identityUnits.forEach((c, unit) -> {
             if (!isComplexUnit(unit) && unit.isEnabled()) {
                 unit.update(worldSpace,this);
             }
         });
+    }
 
-        // render
-        final var render = identityUnits.get(FxRendererUnit.class);
-        if (render != null && render.isEnabled())
-            render.update(worldSpace,this);
+    private void updateUnit(final WorldSpace worldSpace, final Class<? extends IIdentityUnit> type) {
+        final var unit = identityUnits.get(type);
+        if (unit != null && unit.isEnabled())
+            unit.update(worldSpace,this);
     }
 
     public void addUnit(final IIdentityUnit unit) {
@@ -50,5 +66,17 @@ public class Identity {
 
     private boolean isComplexUnit(final IIdentityUnit unit) {
         return unit instanceof FxRendererUnit || unit instanceof PhysicsUnit;
+    }
+
+    public ArrayList<Identity> getChildren() {
+        return children;
+    }
+
+    public Identity getParent() {
+        return parent;
+    }
+
+    public void setParent(Identity parent) {
+        this.parent = parent;
     }
 }

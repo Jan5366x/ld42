@@ -8,7 +8,7 @@ import de.jam.qad.structure.IRenderTarget;
  * @author Jan5366x
  * Created on 11.08.2018.
  */
-public class WorldSpace {
+public class WorldSpace  {
     private final IRenderTarget renderTarget;
 
     public WorldSpace(final IRenderTarget renderTarget) {

@@ -1,5 +1,6 @@
-package de.jam.qad.game.identity;
+package de.jam.qad.game.identity.unit;
 
+import de.jam.qad.game.identity.Identity;
 import de.jam.qad.game.world.WorldSpace;
 
 /**
