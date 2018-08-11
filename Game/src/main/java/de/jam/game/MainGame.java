@@ -44,7 +44,7 @@ public class MainGame extends Application {
         // TODO test stuff >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
         var root = new StackPane();
-        var testImg = new ImageView(ResourceManager.get("./resources/texture/test.png", ImageFxResource.class).get());
+        var testImg = new ImageView(ResourceManager.get("/texture/test.png", ImageFxResource.class).get());
         root.getChildren().add(testImg);
 
 
@@ -52,7 +52,7 @@ public class MainGame extends Application {
             @Override
             public void run() {
                 super.run();
-                final var testClip = ResourceManager.get("./resources/audio/test_audio.wav", RawAudioClip.class).getClip();
+                final var testClip = ResourceManager.get("/audio/test_audio.wav", RawAudioClip.class).getClip();
                 testClip.loop(Integer.MAX_VALUE);
             }
         }.start();
@@ -62,6 +62,14 @@ public class MainGame extends Application {
         // TODO <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
         stage.show();
+    }
+
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+
+        ResourceManager.shutdown();
     }
 
     private void loadTranslation() {

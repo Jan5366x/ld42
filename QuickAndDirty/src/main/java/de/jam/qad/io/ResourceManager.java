@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 public class ResourceManager {
     private final static THashMap<String, IResource> resources = new THashMap<>();
     private final static Guard guard = new Guard();
+    private final static String EXTERNAL_RESOURCE_PATH = "./resources";
 
     public static <T extends IResource> T get(final String resourceName, final Class<T> resourceType) {
         return get(resourceName, resourceType,false);
@@ -48,11 +49,17 @@ public class ResourceManager {
     }
 
 
+    private static String patchExternalResourceName(final String resourceName) {
+        if (resourceName.startsWith(EXTERNAL_RESOURCE_PATH)) {
+            return resourceName;
+        } else {
+            return EXTERNAL_RESOURCE_PATH + resourceName;
+        }
+    }
 
 
     private static <T extends IResource> T load(final String resourceName, final Class<T> resourceType, boolean internal) {
         try {
-            System.out.println("load: " + resourceName);
 
             // instantiate new resource
             final T resource = resourceType.getConstructor().newInstance();
@@ -65,7 +72,7 @@ public class ResourceManager {
                         streamResource.loadByStream(is);
                     }
                 } else {
-                    final var resourceFile = new File(resourceName);
+                    final var resourceFile = new File(patchExternalResourceName(resourceName));
                     try (var is = new FileInputStream(resourceFile)) {
                         streamResource.loadByStream(is);
                     }
@@ -76,6 +83,7 @@ public class ResourceManager {
                 pathResource.loadByPath(resourceName);
             }
 
+            System.out.println("Resource \"" + resourceName + "\" loaded!");
             return resource;
         } catch (Exception e) {
             System.err.println("Can't load resource \"" + resourceName + "\"!");
@@ -83,5 +91,16 @@ public class ResourceManager {
 
             return null;
         }
+    }
+
+    public static void shutdown() {
+        resources.forEach((s, r) -> {
+            try {
+                r.dispose();
+                System.out.println("Resource \"" + s + "\" released!");
+            } catch (Exception e) {
+                System.err.println("Resource \"" + s + "\" can't be released!");
+            }
+        });
     }
 }
