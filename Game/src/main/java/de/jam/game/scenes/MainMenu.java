@@ -36,8 +36,8 @@ public class MainMenu implements IScene {
 
     @Override
     public void onUpdate() {
-        testImg.setX((int) (testImg.getX() + 1));
-        testImg.setY((int) (testImg.getY() + 1));
+        testImg.setX(testImg.getX());
+        testImg.setY(testImg.getY());
 
     }
 
